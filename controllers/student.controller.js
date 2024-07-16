@@ -30,43 +30,5 @@ const getAllStudent = async(req, res) =>{
     }
 }
 
-const deleteStudent = async(req, res) =>{
-    try{
-        const studentId = req.params.studendId;
-        const studentDelete = await Student.findByIdAndDelete(studentId);
-        if(!studentDelete){
-            return res.status(404).send("not found");
-        }else{
-        res.status(201).json(studentDelete);
-        }
-    }
-    catch(e){
-        console.log("not insert student");
-        res.status(400).json({message : e.message});
-    }
-}
-
-const updateStudent = async(req, res) =>{
-    try{
-        const studentId = req.params.studendId;
-        const newData = req.body;
-
-        const validationError = await updateStudentSchema.validateAsync(newData);
-            if(validationError){
-                return res.send(validationError);
-            }
-
-        const studentUpdate = await Student.findByIdAndUpdate(studentId, newData);
-        if(!studentDelete){
-            return res.status(404).send("not found");
-        }else{
-        res.status(200).send(studentUpdate);
-        }
-    }
-    catch(e){
-        console.log("not insert student");
-        res.status(400).json({message : e.message});
-    }
-}
 
 module.exports = {createStudent , getAllStudent , deleteStudent , updateStudent};
